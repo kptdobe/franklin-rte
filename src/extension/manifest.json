@@ -1,0 +1,12 @@
+{
+  "name": "Franklin RTE",
+  "description": "Franklin RTE",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "action": {},
+  "permissions": ["scripting"],
+  "host_permissions": ["*://*/"]
+}
