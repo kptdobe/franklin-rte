@@ -14,7 +14,7 @@ chrome.action.onClicked.addListener(async (tab) => {
   chrome.windows.create({
     url: chrome.runtime.getURL(`/index.html?tabId=${tab.id}`),
     type: 'popup',
-    width: 1000,
+    width: 740,
     height: 1200,
   });
 });
