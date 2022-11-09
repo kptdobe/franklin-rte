@@ -12,11 +12,12 @@
 
 export const classNameToBlockType = (className) => {
   let blockType = className.shift();
+  blockType = blockType.charAt(0).toUpperCase() + blockType.slice(1).toLowerCase();
   if (className.length) {
     const options = className.map((cls) => cls.split('-').join(' '));
     blockType += ` (${options.join(', ')})`;
   } else {
-    blockType = blockType.split('-').join(' ');
+    blockType = blockType.split('-').map((s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()).join(' ');
   }
   return blockType;
 };

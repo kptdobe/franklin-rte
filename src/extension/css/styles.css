@@ -38,9 +38,8 @@
 #editor {
   width: auto;
   height: 100%;
-  /* height: calc(100vh - 232px); */
   border: 1px solid lightgrey;
-  padding: 12px;
+  padding: 30px 40px;
   background-color: #fff;
   color: var(--hlx-import-text-color);
   font-family: var(--hlx-import-font-family);
@@ -130,9 +129,15 @@
 #editor table,
 #editor th,
 #editor td {
-  max-width: 100%;
+  max-width: 624px;
   border: 1px solid var(--hlx-import-text-color);
   border-collapse: collapse;
+}
+
+#editor th,
+#editor td {
+  max-width: 100%;
+  text-align: left;  
 }
 
 #editor table {
