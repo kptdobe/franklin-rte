@@ -89,6 +89,36 @@ const htmlEditionToSource = () => {
   return main.innerHTML;
 };
 
+// required styling for the copy/paste to Word / gdoc to look the same
+const makeStylesReadyForCopy = (element) => {
+  const forceStyles = (el, properties) => {
+    const styles = [];
+    properties.forEach((property) => {
+      const style = window.getComputedStyle(el);
+      const value = style.getPropertyValue(property);
+      if (value) {
+        styles.push(`${property}: ${value}`);
+      }
+    });
+    if (styles.length > 0) {
+      el.setAttribute('style', styles.join(';'));
+    }
+  };
+
+  element.querySelectorAll('table').forEach((table) => {
+    forceStyles(table, ['border', 'border-spacing', 'width']);
+  });
+
+  element.querySelectorAll('th, td').forEach((el) => {
+    forceStyles(el, ['background-color', 'border', 'padding', 'text-align', 'vertical-align', 'margin']);
+  });
+
+  element.querySelectorAll('img').forEach((img) => {
+    img.setAttribute('width', img.width);
+    img.setAttribute('height', img.height);
+  });
+};
+
 const loadEditor = async (tab) => {
   const req = await fetch(tab.url);
   const source = await req.text();
@@ -98,7 +128,10 @@ const loadEditor = async (tab) => {
 
   htmlSourceToEdition(main, tab.url);
 
-  getEditorElement().innerHTML = main.innerHTML;
+  const editor = getEditorElement();
+  editor.innerHTML = main.innerHTML;
+
+  makeStylesReadyForCopy(editor);
 };
 
 const debounce = (func, wait, immed) => {

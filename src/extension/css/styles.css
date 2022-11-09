@@ -126,7 +126,7 @@
 }
 
 #editor img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
@@ -140,8 +140,8 @@
 
 #editor th,
 #editor td {
-  max-width: 100%;
   text-align: left;
+  margin: 0;
   padding: 6px;
   vertical-align: top;
 }
@@ -151,7 +151,8 @@
   margin-bottom: 20px;
 }
 
-#editor thead tr {
+#editor thead tr,
+#editor thead th {
   background-color: var(--hlx-import-table-head-background-color);
 }
 

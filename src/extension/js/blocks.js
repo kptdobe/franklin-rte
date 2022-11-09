@@ -46,6 +46,8 @@ export const toBlockCSSClassNames = (text) => {
 export const blockDivToTable = (main) => {
   main.querySelectorAll('div[class]').forEach((div) => {
     const table = document.createElement('table');
+    table.setAttribute('cellpadding', '0');
+    table.setAttribute('cellspacing', '0');
     let maxCols = 0;
     const thead = document.createElement('thead');
     const th = document.createElement('th');
