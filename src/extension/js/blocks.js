@@ -93,3 +93,19 @@ export const blockTableToDiv = (main) => {
     table.replaceWith(div);
   });
 };
+
+export const createSectionBreaks = (main) => {
+  const divs = main.querySelectorAll(':scope > div');
+  divs.forEach((div, index) => {
+    if (index < divs.length - 1) {
+      const hr = document.createElement('hr');
+      div.append(hr);
+    }
+  });
+};
+
+export const removeSectionBreaks = (main) => {
+  main.querySelectorAll('hr').forEach((hr) => {
+    hr.remove();
+  });
+};

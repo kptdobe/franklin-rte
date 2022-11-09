@@ -10,7 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { blockDivToTable, blockTableToDiv } from './blocks.js';
+import {
+  blockDivToTable,
+  blockTableToDiv,
+  createSectionBreaks,
+  removeSectionBreaks,
+} from './blocks.js';
 
 /**
  * Returns the current tab
@@ -70,6 +75,18 @@ const htmlSourceToEdition = (main, url) => {
   });
 
   blockDivToTable(main);
+  createSectionBreaks(main);
+};
+
+const htmlEditionToSource = () => {
+  const editor = getEditorElement();
+  const doc = new DOMParser().parseFromString(editor.innerHTML, 'text/html');
+  const main = doc.body;
+
+  blockTableToDiv(main);
+  removeSectionBreaks(main);
+
+  return main.innerHTML;
 };
 
 const loadEditor = async (tab) => {
@@ -82,16 +99,6 @@ const loadEditor = async (tab) => {
   htmlSourceToEdition(main, tab.url);
 
   getEditorElement().innerHTML = main.innerHTML;
-};
-
-const htmlEditionToSource = () => {
-  const editor = getEditorElement();
-  const doc = new DOMParser().parseFromString(editor.innerHTML, 'text/html');
-  const main = doc.body;
-
-  blockTableToDiv(main);
-
-  return main.innerHTML;
 };
 
 const debounce = (func, wait, immed) => {
