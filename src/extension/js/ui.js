@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { blockDivToTable, blockTableToDiv } from './blocks.js';
+
 /**
  * Returns the current tab
  * @returns {chrome.tabs.Tab} The current tab
@@ -46,89 +48,6 @@ const copy = async () => {
   textarea.select();
   document.execCommand('copy');
   textarea.remove();
-};
-
-const classNameToBlockType = (className) => {
-  let blockType = className.shift();
-  if (className.length) {
-    const options = className.map((cls) => cls.split('-').join(' '));
-    blockType += ` (${options.join(', ')})`;
-  } else {
-    blockType = blockType.split('-').join(' ');
-  }
-  return blockType;
-};
-
-const toBlockCSSClassNames = (text) => {
-  if (!text) {
-    return [];
-  }
-  const names = [];
-  const idx = text.lastIndexOf('(');
-  if (idx >= 0) {
-    names.push(text.substring(0, idx));
-    names.push(...text.substring(idx + 1).split(','));
-  } else {
-    names.push(text);
-  }
-
-  return names.map((name) => name
-    .toLowerCase()
-    .replace(/[^0-9a-z]+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, ''))
-    .filter((name) => !!name);
-};
-
-const blockDivToTable = (main) => {
-  main.querySelectorAll('div[class]').forEach((div) => {
-    const table = document.createElement('table');
-    let maxCols = 0;
-    const thead = document.createElement('thead');
-    const th = document.createElement('th');
-    th.innerHTML = classNameToBlockType(Array.from(div.classList));
-    thead.appendChild(th);
-    table.appendChild(thead);
-
-    const tbody = document.createElement('tbody');
-    table.appendChild(tbody);
-    Array.from(div.children).forEach((row) => {
-      if (row.tagName === 'DIV') {
-        const rowElement = document.createElement('tr');
-        tbody.appendChild(rowElement);
-        let numCols = 0;
-        Array.from(row.children).forEach((cell) => {
-          if (cell.tagName === 'DIV') {
-            const cellElement = document.createElement('td');
-            rowElement.appendChild(cellElement);
-            cellElement.innerHTML = cell.innerHTML;
-            numCols += 1;
-          }
-          maxCols = Math.max(maxCols, numCols);
-        });
-      }
-    });
-    th.colSpan = maxCols;
-
-    div.replaceWith(table);
-  });
-};
-
-const blockTableToDiv = (main) => {
-  main.querySelectorAll('table').forEach((table) => {
-    const div = document.createElement('div');
-    div.classList.add(...toBlockCSSClassNames(table.querySelector('th').innerHTML));
-    table.querySelectorAll('tbody tr').forEach((row) => {
-      const rowDiv = document.createElement('div');
-      div.appendChild(rowDiv);
-      row.querySelectorAll('td').forEach((cell) => {
-        const cellDiv = document.createElement('div');
-        rowDiv.appendChild(cellDiv);
-        cellDiv.innerHTML = cell.innerHTML;
-      });
-    });
-    table.replaceWith(div);
-  });
 };
 
 const htmlSourceToEdition = (main, url) => {
