@@ -137,7 +137,9 @@
 #editor th,
 #editor td {
   max-width: 100%;
-  text-align: left;  
+  text-align: left;
+  padding: 6px;
+  vertical-align: top;
 }
 
 #editor table {
@@ -147,9 +149,4 @@
 
 #editor thead tr {
   background-color: var(--hlx-import-table-head-background-color);
-}
-
-#editor th,
-#editor td {
-  padding: 6px;
 }
