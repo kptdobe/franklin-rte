@@ -109,7 +109,6 @@ const makeStylesReadyForCopy = (element) => {
 
   element.querySelectorAll('table').forEach((table) => {
     forceStyles(table, ['border', 'border-spacing', 'border-collapse', 'width']);
-    table.setAttribute('width', table.clientWidth);
   });
 
   element.querySelectorAll('th, td').forEach((el) => {
@@ -117,8 +116,17 @@ const makeStylesReadyForCopy = (element) => {
   });
 
   element.querySelectorAll('img').forEach((img) => {
-    img.setAttribute('width', img.width);
-    img.setAttribute('height', img.height);
+    const setDimensions = () => {
+      console.log('setting dimensions', img.width, img.height);
+      img.setAttribute('width', img.width);
+      img.setAttribute('height', img.height);
+    };
+
+    if (img.complete) {
+      setDimensions();
+    } else {
+      img.addEventListener('load', setDimensions);
+    }
   });
 };
 
