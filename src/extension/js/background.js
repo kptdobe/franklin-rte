@@ -10,11 +10,24 @@
  * governing permissions and limitations under the License.
  */
 // simply creates the popup and pass the tab that has created it as a parameter
-chrome.action.onClicked.addListener(async (tab) => {
+
+const openPopup = async (id) => {
   chrome.windows.create({
-    url: chrome.runtime.getURL(`/index.html?tabId=${tab.id}`),
+    url: chrome.runtime.getURL(`/index.html?tabId=${id}`),
     type: 'popup',
     width: 740,
     height: 1200,
   });
+};
+
+chrome.action.onClicked.addListener((tab) => {
+  openPopup(tab.id);
+});
+
+chrome.webNavigation.onCompleted.addListener((details) => {
+  const u = new URL(details.url);
+  const vds = u.searchParams.get('view-doc-source');
+  if (vds && vds === 'true') {
+    openPopup(details.tabId);
+  }
 });
