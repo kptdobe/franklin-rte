@@ -35,6 +35,31 @@
   display: none;
 }
 
+header {
+  display: grid;
+  grid-template-columns: 1fr 130px;
+}
+
+#copy {
+  font-size: 18px;
+  background-color: rgb(16, 149, 193);
+  color: white;
+  white-space: nowrap;
+  border: 1px solid white;
+  border-radius: 0.5em;
+  line-height: 27px;
+  max-height: 32px;
+  align-self: center;
+}
+
+#copy:hover {
+  background-color: rgb(25, 179, 230);
+}
+
+#copy.copied {
+  background-color: rgb(25, 179, 25);
+}
+
 #editor {
   width: auto;
   height: 100%;
@@ -133,9 +158,9 @@
 #editor table,
 #editor th,
 #editor td {
-  max-width: 624px;
   border: 1px solid var(--hlx-import-text-color);
   border-collapse: collapse;
+  border-spacing: 0;
 }
 
 #editor th,
@@ -147,6 +172,8 @@
 }
 
 #editor table {
+  /* max-width: 624px; */
+  max-width: 600px;
   width: 100%;
   margin-bottom: 20px;
 }

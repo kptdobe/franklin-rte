@@ -45,14 +45,16 @@ const getEditorElement = () => document.getElementById('editor');
 /**
  * Runs the copy (to clipboard...) action
  */
-// eslint-disable-next-line no-unused-vars
-const copy = async () => {
-  const textarea = document.createElement('textarea');
-  textarea.value = getEditorElement().innerHTML;
-  document.body.appendChild(textarea);
-  textarea.select();
+const copyHTMLToClipboard = (html) => {
+  const callback = (e) => {
+    e.clipboardData.setData('text/html', html);
+    e.clipboardData.setData('text/plain', html);
+    e.preventDefault();
+  };
+
+  document.addEventListener('copy', callback);
   document.execCommand('copy');
-  textarea.remove();
+  document.removeEventListener('copy', callback);
 };
 
 const htmlSourceToEdition = (main, url) => {
@@ -106,11 +108,12 @@ const makeStylesReadyForCopy = (element) => {
   };
 
   element.querySelectorAll('table').forEach((table) => {
-    forceStyles(table, ['border', 'border-spacing', 'width']);
+    forceStyles(table, ['border', 'border-spacing', 'border-collapse', 'width']);
+    table.setAttribute('width', table.clientWidth);
   });
 
   element.querySelectorAll('th, td').forEach((el) => {
-    forceStyles(el, ['background-color', 'border', 'padding', 'text-align', 'vertical-align', 'margin']);
+    forceStyles(el, ['background-color', 'text-align', 'vertical-align', 'border', 'padding']);
   });
 
   element.querySelectorAll('img').forEach((img) => {
@@ -162,10 +165,21 @@ const load = async () => {
     files: ['/js/content.js'],
   });
 
-  console.log('current tab', tab);
   loadEditor(tab);
 
   const editor = getEditorElement();
+
+  const copyButton = document.getElementById('copy');
+  copyButton.addEventListener('click', () => {
+    copyHTMLToClipboard(editor.innerHTML);
+    copyButton.innerHTML = 'Copied!';
+    copyButton.classList.add('copied');
+    setTimeout(() => {
+      copyButton.innerHTML = 'Copy';
+      copyButton.classList.remove('copied');
+    }, 2000);
+  });
+
   editor.addEventListener('input', debounce(() => {
     console.log('editor content has changed');
     sendMessage({ fct: 'setMain', params: { html: htmlEditionToSource() } });
