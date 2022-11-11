@@ -15,6 +15,7 @@ import {
   blockTableToDiv,
   createSectionBreaks,
   removeSectionBreaks,
+  addMetadataBlock,
 } from './blocks.js';
 
 /**
@@ -57,7 +58,7 @@ const copyHTMLToClipboard = (html) => {
   document.removeEventListener('copy', callback);
 };
 
-const htmlSourceToEdition = (main, url) => {
+const htmlSourceToEdition = (main, head, url) => {
   main.querySelectorAll('img').forEach((img) => {
     if (!img.src) return;
     const extension = new URL(window.location.href);
@@ -78,6 +79,7 @@ const htmlSourceToEdition = (main, url) => {
 
   blockDivToTable(main);
   createSectionBreaks(main);
+  addMetadataBlock(main, head);
 };
 
 const htmlEditionToSource = () => {
@@ -108,6 +110,8 @@ const makeStylesReadyForCopy = (element) => {
   };
 
   element.querySelectorAll('table').forEach((table) => {
+    table.setAttribute('cellpadding', '0');
+    table.setAttribute('cellspacing', '0');
     forceStyles(table, ['border', 'border-spacing', 'border-collapse', 'width']);
   });
 
@@ -134,9 +138,10 @@ const loadEditor = async (tab) => {
   const source = await req.text();
 
   const doc = new DOMParser().parseFromString(source, 'text/html');
+  const { head } = doc;
   const main = doc.querySelector('main');
 
-  htmlSourceToEdition(main, tab.url);
+  htmlSourceToEdition(main, head, tab.url);
 
   const editor = getEditorElement();
   editor.innerHTML = main.innerHTML;

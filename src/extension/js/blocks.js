@@ -22,6 +22,8 @@ export const classNameToBlockType = (className) => {
   return blockType;
 };
 
+export const metaToDisplay = (meta) => classNameToBlockType([meta]);
+
 export const toBlockCSSClassNames = (text) => {
   if (!text) {
     return [];
@@ -46,9 +48,6 @@ export const toBlockCSSClassNames = (text) => {
 export const blockDivToTable = (main) => {
   main.querySelectorAll('div[class]').forEach((div) => {
     const table = document.createElement('table');
-    table.setAttribute('cellpadding', '0');
-    table.setAttribute('cellspacing', '0');
-    let maxCols = 0;
     const thead = document.createElement('thead');
     const th = document.createElement('th');
     th.innerHTML = classNameToBlockType(Array.from(div.classList));
@@ -57,6 +56,8 @@ export const blockDivToTable = (main) => {
 
     const tbody = document.createElement('tbody');
     table.appendChild(tbody);
+
+    let maxCols = 0;
     Array.from(div.children).forEach((row) => {
       if (row.tagName === 'DIV') {
         const rowElement = document.createElement('tr');
@@ -110,4 +111,90 @@ export const removeSectionBreaks = (main) => {
   main.querySelectorAll('hr').forEach((hr) => {
     hr.remove();
   });
+};
+
+const META_EXCLUDE = ['viewport', 'google-site-verification', 'serp-content-type'];
+
+export const addMetadataBlock = (main, head) => {
+  const table = document.createElement('table');
+
+  const thead = document.createElement('thead');
+  const th = document.createElement('th');
+  th.innerHTML = 'Metadata';
+  th.colSpan = 2;
+  thead.appendChild(th);
+  table.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+  table.appendChild(tbody);
+
+  // BEGIN: special cases
+  const title = head.querySelector('title');
+  if (title) {
+    const row = document.createElement('tr');
+    tbody.appendChild(row);
+
+    const nameCell = document.createElement('td');
+    nameCell.innerHTML = 'Title';
+    row.appendChild(nameCell);
+
+    const content = document.createElement('td');
+    content.innerHTML = title.innerHTML;
+    row.appendChild(content);
+  }
+
+  const image = head.querySelector('meta[property="og:image"]');
+  if (image) {
+    const row = document.createElement('tr');
+    tbody.appendChild(row);
+
+    const nameCell = document.createElement('td');
+    nameCell.innerHTML = 'Image';
+    row.appendChild(nameCell);
+
+    const content = document.createElement('td');
+    const img = document.createElement('img');
+    img.src = image.content;
+    content.appendChild(img);
+    row.appendChild(content);
+  }
+
+  const tags = head.querySelectorAll('meta[property="article:tag"]');
+  if (tags && tags.length > 0) {
+    const row = document.createElement('tr');
+    tbody.appendChild(row);
+
+    const nameCell = document.createElement('td');
+    nameCell.innerHTML = 'Tags';
+    row.appendChild(nameCell);
+
+    const content = document.createElement('td');
+    content.innerHTML = Array.from(tags).map((tag) => tag.content).join(', ');
+    row.appendChild(content);
+  }
+  // END: special cases
+
+  head.querySelectorAll('meta').forEach((meta) => {
+    const row = document.createElement('tr');
+    tbody.appendChild(row);
+
+    let name = meta.getAttribute('name');
+    if (!name) {
+      name = meta.getAttribute('property');
+    }
+
+    if (name
+      && (name.indexOf(':') === -1)
+      && !META_EXCLUDE.includes(name)) {
+      const nameCell = document.createElement('td');
+      nameCell.innerHTML = metaToDisplay(name);
+      row.appendChild(nameCell);
+
+      const content = document.createElement('td');
+      content.innerHTML = meta.getAttribute('content');
+      row.appendChild(content);
+    }
+  });
+
+  main.append(table);
 };
