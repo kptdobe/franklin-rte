@@ -117,7 +117,6 @@ const makeStylesReadyForCopy = (element) => {
 
   element.querySelectorAll('img').forEach((img) => {
     const setDimensions = () => {
-      console.log('setting dimensions', img.width, img.height);
       img.setAttribute('width', img.width);
       img.setAttribute('height', img.height);
     };
@@ -147,11 +146,9 @@ const loadEditor = async (tab) => {
 
 const debounce = (func, wait, immed) => {
   let timeout;
-  return function () {
+  return (...args) => {
     const ctx = this;
-    // eslint-disable-next-line prefer-rest-params
-    const args = arguments;
-    const later = function () {
+    const later = () => {
       timeout = null;
       if (!immed) func.apply(ctx, args);
     };
@@ -189,7 +186,6 @@ const load = async () => {
   });
 
   editor.addEventListener('input', debounce(() => {
-    console.log('editor content has changed');
     sendMessage({ fct: 'setMain', params: { html: htmlEditionToSource() } });
   }, 500));
 };
