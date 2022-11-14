@@ -13,22 +13,22 @@
 :host,
 :root {
   /* COLORS */
-  --hlx-import-text-color: #000;
-  --hlx-import-link-color: #0563C1;
-  --hlx-import-secondary-heading-color: #434343;
-  --hlx-import-tertiary-heading-color: #666;
-  --hlx-import-background-color: #fff;
-  --hlx-import-table-head-background-color: #F5CBCD;
+  --hlx-viewsource-text-color: #000;
+  --hlx-viewsource-link-color: #0563C1;
+  --hlx-viewsource-secondary-heading-color: #434343;
+  --hlx-viewsource-tertiary-heading-color: #666;
+  --hlx-viewsource-background-color: #fff;
+  --hlx-viewsource-table-head-background-color: #F5CBCD;
   /* FONTS */
-  --hlx-import-font-family: 'Arial', sans-serif;
+  --hlx-viewsource-font-family: 'Arial', sans-serif;
   /* FONT SIZES */
-  --hlx-import-body-font-size: 14px;
-  --hlx-import-h1-font-size: 25px;
-  --hlx-import-h2-font-size: 20px;
-  --hlx-import-h3-font-size: 18px;
-  --hlx-import-h4-font-size: 15px;
-  --hlx-import-h5-font-size: var(--hlx-import-body-font-size);
-  --hlx-import-h6-font-size: var(--hlx-import-body-font-size);
+  --hlx-viewsource-body-font-size: 14px;
+  --hlx-viewsource-h1-font-size: 25px;
+  --hlx-viewsource-h2-font-size: 20px;
+  --hlx-viewsource-h3-font-size: 18px;
+  --hlx-viewsource-h4-font-size: 15px;
+  --hlx-viewsource-h5-font-size: var(--hlx-viewsource-body-font-size);
+  --hlx-viewsource-h6-font-size: var(--hlx-viewsource-body-font-size);
 }
 
 .hidden {
@@ -66,9 +66,9 @@ header {
   border: 1px solid lightgrey;
   padding: 30px 40px;
   background-color: #fff;
-  color: var(--hlx-import-text-color);
-  font-family: var(--hlx-import-font-family);
-  font-size: var(--hlx-import-body-font-size);
+  color: var(--hlx-viewsource-text-color);
+  font-family: var(--hlx-viewsource-font-family);
+  font-size: var(--hlx-viewsource-body-font-size);
   line-height: 1.15;
   overflow-y: auto;
 }
@@ -90,40 +90,40 @@ header {
 
 #editor h1 {
   padding-top: 20px;
-  font-size: var(--hlx-import-h1-font-size);
+  font-size: var(--hlx-viewsource-h1-font-size);
 }
 
 #editor h2 {
   padding-top: 18px;
-  font-size: var(--hlx-import-h2-font-size);
+  font-size: var(--hlx-viewsource-h2-font-size);
 }
 
 #editor h3 {
   padding-top: 16px;
   padding-bottom: 4px;
-  color: var(--hlx-import-secondary-heading-color);
-  font-size: var(--hlx-import-h3-font-size);
+  color: var(--hlx-viewsource-secondary-heading-color);
+  font-size: var(--hlx-viewsource-h3-font-size);
 }
 
 #editor h4 {
   padding-top: 14px;
   padding-bottom: 4px;
-  color: var(--hlx-import-tertiary-heading-color);
-  font-size: var(--hlx-import-h4-font-size);
+  color: var(--hlx-viewsource-tertiary-heading-color);
+  font-size: var(--hlx-viewsource-h4-font-size);
 }
 
 #editor h5 {
   padding-top: 12px;
   padding-bottom: 4px;
-  color: var(--hlx-import-tertiary-heading-color);
-  font-size: var(--hlx-import-h5-font-size);
+  color: var(--hlx-viewsource-tertiary-heading-color);
+  font-size: var(--hlx-viewsource-h5-font-size);
 }
 
 #editor h6 {
   padding-top: 12px;
   padding-bottom: 4px;
-  color: var(--hlx-import-tertiary-heading-color);
-  font-size: var(--hlx-import-h6-font-size);
+  color: var(--hlx-viewsource-tertiary-heading-color);
+  font-size: var(--hlx-viewsource-h6-font-size);
   font-style: italic;
 }
 
@@ -132,7 +132,7 @@ header {
 }
 
 #editor a:any-link {
-  color: var(--hlx-import-link-color);
+  color: var(--hlx-viewsource-link-color);
 }
 
 #editor ul {
@@ -158,7 +158,7 @@ header {
 #editor table,
 #editor th,
 #editor td {
-  border: 1px solid var(--hlx-import-text-color);
+  border: 1px solid var(--hlx-viewsource-text-color);
   border-collapse: collapse;
   border-spacing: 0;
 }
@@ -180,7 +180,7 @@ header {
 
 #editor thead tr,
 #editor thead th {
-  background-color: var(--hlx-import-table-head-background-color);
+  background-color: var(--hlx-viewsource-table-head-background-color);
 }
 
 #editor hr {

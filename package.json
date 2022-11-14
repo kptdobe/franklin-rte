@@ -1,5 +1,5 @@
 {
-  "name": "@adobe/franklin-rte",
+  "name": "@kptdobe/franklin-view-document-source",
   "version": "1.0.0",
   "description": "Helix Real Time Editor",
   "scripts": {
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/adobe/franklin-rte"
+    "url": "https://github.com/kptdobe/franklin-view-document-source"
   },
   "author": "Adobe",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/adobe/franklin-rte/issues"
+    "url": "https://github.com/kptdobe/franklin-view-document-source/issues"
   },
-  "homepage": "https://github.com/adobe/franklin-rte#readme",
+  "homepage": "https://github.com/kptdobe/franklin-view-document-source#readme",
   "devDependencies": {
     "@adobe/eslint-config-helix": "1.3.2",
     "@adobe/helix-fetch": "3.1.2",

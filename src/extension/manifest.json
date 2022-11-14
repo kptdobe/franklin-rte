@@ -1,6 +1,6 @@
 {
   "name": "Franklin RTE",
-  "description": "Franklin RTE",
+  "description": "Franklin - View Document Source",
   "version": "1.0",
   "manifest_version": 3,
   "background": {

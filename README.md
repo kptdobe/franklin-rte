@@ -7,7 +7,7 @@ Playground so far.
 ### As an unpacked Chrome extension
 
 ```
-git clone https://github.com/kptdobe/franklin-rte
+git clone https://github.com/kptdobe/franklin-view-document-source
 ```
 
 Load the extension as an local unpacked extension - see [instructions here](https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked)
