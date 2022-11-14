@@ -10,6 +10,10 @@
  * governing permissions and limitations under the License.
  */
 {
+  /**
+   * Sends the main back to the source window.
+   * @param {Object} params Contains the new HTML of the main element
+   */
   const setMain = async ({ html }) => {
     // page needs to listen for this event
     window.postMessage({ type: 'refresh-main', html }, '*');
@@ -17,9 +21,6 @@
 
   chrome.runtime.onMessage.addListener(({ fct, params }, sender, sendResponse) => {
     const handleResponse = async () => {
-      // eslint-disable-next-line no-console
-      console.log('Received message from extension', fct, params);
-
       let result;
       if (fct === 'setMain') {
         result = await setMain(params);

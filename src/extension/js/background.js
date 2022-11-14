@@ -9,8 +9,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-// simply creates the popup and pass the tab that has created it as a parameter
 
+/**
+ * Creates the application popup for the given tab id.
+ * @param {String} id The tab id
+ */
 const openPopup = async (id) => {
   chrome.windows.create({
     url: chrome.runtime.getURL(`/index.html?tabId=${id}`),
@@ -20,10 +23,13 @@ const openPopup = async (id) => {
   });
 };
 
+// adds the listener to open the popup when clicking on the extension button
 chrome.action.onClicked.addListener((tab) => {
   openPopup(tab.id);
 });
 
+// adds the listener to open the popup when navigated page contains
+// the view-doc-source=true query parameter
 chrome.webNavigation.onCompleted.addListener((details) => {
   const u = new URL(details.url);
   const vds = u.searchParams.get('view-doc-source');
