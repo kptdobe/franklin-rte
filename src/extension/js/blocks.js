@@ -11,18 +11,15 @@
  */
 
 /**
- * Converts a css className (comma separated class names) into a block name.
- * @param {String} className The css className
+ * Converts a list of css class names into a block name.
+ * @param {Array[String]} classList The list of css class names
  * @returns {String} The block name
  */
-export const classNameToBlockName = (className) => {
-  let blockType = className.shift();
-  blockType = blockType.charAt(0).toUpperCase() + blockType.slice(1).toLowerCase();
-  if (className.length) {
-    const options = className.map((cls) => cls.split('-').join(' '));
-    blockType += ` (${options.join(', ')})`;
-  } else {
-    blockType = blockType.split('-').map((s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()).join(' ');
+export const classNameToBlockName = (classList) => {
+  let blockType = classList.shift();
+  blockType = blockType.split('-').map((s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()).join(' ');
+  if (classList.length) {
+    blockType += ` (${classList.map((s) => s.split('-').join(' ')).join(', ')})`;
   }
   return blockType;
 };
@@ -63,9 +60,11 @@ export const blockDivToTable = (main) => {
   main.querySelectorAll('div[class]').forEach((div) => {
     const table = document.createElement('table');
     const thead = document.createElement('thead');
+    const tr = document.createElement('tr');
     const th = document.createElement('th');
     th.innerHTML = classNameToBlockName(Array.from(div.classList));
-    thead.appendChild(th);
+    tr.appendChild(th);
+    thead.appendChild(tr);
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
@@ -150,10 +149,12 @@ export const addMetadataBlock = (main, head) => {
   const table = document.createElement('table');
 
   const thead = document.createElement('thead');
+  const tr = document.createElement('tr');
   const th = document.createElement('th');
   th.innerHTML = 'Metadata';
   th.colSpan = 2;
-  thead.appendChild(th);
+  tr.appendChild(th);
+  thead.appendChild(tr);
   table.appendChild(thead);
 
   const tbody = document.createElement('tbody');
